@@ -1,5 +1,5 @@
 import { login, logout, getInfo } from '@/api/user'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, removeToken,getOperator,removeOperator,setOperator, getRoleID,removeRoleID,setRoleID } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
 const state = {
@@ -7,7 +7,9 @@ const state = {
   name: '',
   avatar: '',
   introduction: '',
-  roles: []
+  roles: [],
+  operator:{},
+  currentRoleID:{},
 }
 
 const mutations = {
@@ -25,10 +27,18 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
-  }
+  },
+  SET_CURRENT_ROLE_ID: (state, roleId) => {
+    state.currentRoleID = roleId
+  },
 }
 
 const actions = {
+  changeRole({ commit,state }, roleId){
+    //刷新cookie和store中的current role ID
+    commit('SET_CURRENT_ROLE_ID', roleId)
+    setRoleID(roleId)
+  },
   // user login
   login({ commit }, userInfo) {
     const { username, password } = userInfo

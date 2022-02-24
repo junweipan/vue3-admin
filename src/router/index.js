@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 /* Router Modules */
 // import componentsRouter from './modules/components'
 import chartsRouter from './modules/charts'
@@ -25,7 +25,38 @@ import nestedRouter from './modules/nested'
     activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
   }
  */
+export const myRoutes =[
+  {
+    path: '/',
+    component: () => import('@/home/index'),
+    hidden: true
+  },
+  {
+    path: '/login',
+    component: () => import('@/views/login/index'),
+    hidden: true
+  },
+  {
+    path: '/404',
+    component: () => import('@/views/error-page/404'),
+    hidden: true
+  },
+  {
+    path: '/401',
+    component: () => import('@/views/error-page/401'),
+    hidden: true
+  },
 
+  // 404 page must be placed at the end !!!
+  { path: '/:catchAll(.*)', redirect: '/404', hidden: true }
+  // {
+  //   path: '*',
+  //   component: () => import(''),
+  //   children: [],
+  //   redirect: '/404',
+  //   hidden: true
+  // }
+]
 /**
  * constantRoutes
  * a base page that does not have permission requirements
@@ -389,9 +420,10 @@ export const asyncRoutes = [
 
 const createCustomRouter = () => createRouter({
   // mode: 'history', // require service support
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
+  // routes: constantRoutes
+  routes: myRoutes
 })
 
 const router = createCustomRouter()
