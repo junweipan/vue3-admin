@@ -1,3 +1,7 @@
+// import componentsRouter from './modules/components'
+import chartsRouter from './modules/charts'
+import tableRouter from './modules/table'
+import nestedRouter from './modules/nested'
 /**
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
