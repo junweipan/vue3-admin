@@ -42,8 +42,7 @@ const state = {
 const mutations = {
   SET_ROUTES: (state, routes) => {
     state.addRoutes = routes
-    // state.routes = constantRoutes.concat(routes)
-    state.route = myRoutes
+    state.routes = constantRoutes.concat(routes)
   }
 }
 
@@ -57,8 +56,7 @@ const actions = {
         accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
       }
       commit('SET_ROUTES', accessedRoutes)
-      // resolve(accessedRoutes)
-      resolve(myRoutes)
+      resolve(accessedRoutes)
     })
   }
 }

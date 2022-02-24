@@ -12,7 +12,7 @@
         :collapse-transition="false"
         mode="vertical"
       >
-        <sidebar-item v-for="route in permission_routes" :key="route.path" :item="route" :base-path="route.path" />
+        <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path" />
       </el-menu>
     </el-scrollbar>
   </div>
@@ -24,16 +24,29 @@ import Logo from './Logo'
 import SidebarItem from './SidebarItem'
 import variables from '@/styles/variables.scss'
 
+import { getToken } from '@/utils/auth' // get token from cookie
+
 export default {
   components: { SidebarItem, Logo },
-  mounted() {
-    console.log('permission_routes',this.permission_routes)
+  props:{
+    moduleRoutes:{ 
+            type: Array,
+            default: []
+        },
   },
   computed: {
     ...mapGetters([
-      'permission_routes',
       'sidebar'
     ]),
+    routes() {
+      // console.log(this.$router.options.routes)
+      // 完整路径
+      // return this.$router.options.routes
+
+      // 部分路由, 控制页面显示 每次改变路由要检查token权限
+      const hasToken = getToken()
+      return this.moduleRoutes;
+    },
     activeMenu() {
       const route = this.$route
       const { meta, path } = route

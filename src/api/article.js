@@ -39,3 +39,26 @@ export function updateArticle(data) {
     data
   })
 }
+// 文章审核通过
+export function auditSuccess(id) {
+  return request({
+    url: `/article/article/audit/success/${id}`,
+    method: 'get'
+  })
+}
+
+// 文章审核未通过
+export function auditFail(id) {
+  return request({
+    url: `/article/article/audit/fail/${id}`,
+    method: 'get'
+  })
+}
+
+// 查询文章详情
+export function getById(id) {
+  return request({
+    url: `/article/article/${id}`,
+    method: 'get'
+  })
+}
