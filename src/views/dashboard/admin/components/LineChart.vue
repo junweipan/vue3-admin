@@ -4,6 +4,9 @@
 
 <script>
 import echarts from 'echarts'
+//解决在窗口大小发生变化时，需要执行this.chart.resize()动态调整图表的大小，发生错误
+// http://jianboge.com/d387222
+import { markRaw } from 'vue'
 require('echarts/theme/macarons') // echarts theme
 import resize from './mixins/resize'
 
@@ -58,7 +61,7 @@ export default {
   },
   methods: {
     initChart() {
-      this.chart = echarts.init(this.$el, 'macarons')
+      this.chart = markRaw(echarts.init(this.$el, 'macarons'))
       this.setOptions(this.chartData)
     },
     setOptions({ expectedData, actualData } = {}) {
