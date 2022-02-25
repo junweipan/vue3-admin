@@ -25,7 +25,7 @@ export default {
   },
   data() {
     return {
-      chart: null
+      chart: echarts.ECharts
     }
   },
   mounted() {
@@ -43,7 +43,6 @@ export default {
   methods: {
     initChart() {
       this.chart = echarts.init(this.$el, 'macarons')
-
       this.chart.setOption({
         tooltip: {
           trigger: 'item',
