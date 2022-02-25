@@ -3,8 +3,10 @@ import {
   createWebHistory
 } from 'vue-router'
 
+import analysisRoutes from './modules/analysisRoutes'
 import valueRoutes from './modules/valueRoutes'
 import settingRoutes from './modules/settingRoutes';
+import contractRoutes from './modules/contractRoutes'
 /* Router Modules */
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -64,14 +66,14 @@ export const constantRoutes = [
     hidden: true
   },
   {
-    path: '/dashboard',
+    path: '/',
     component: () => import('@/layout/index'),
     children: [
       {
-        path: 'dashboard',
+        path: '',
         component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
-        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+        name: '首页',
+        meta: { title: '首页', icon: 'dashboard', affix: true }
       }
     ]
   },
@@ -121,7 +123,9 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
+  contractRoutes,
   valueRoutes,
+  analysisRoutes,
   settingRoutes,
   // {
   //   path: '/permission',

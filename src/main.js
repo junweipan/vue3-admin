@@ -19,7 +19,7 @@ import './permission' // permission control
 import './utils/error-log' // error log
 
 import SvgIcon from '@/components/SvgIcon'// svg component
-
+import * as echarts from 'echarts'
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -34,6 +34,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const app = createApp(App)
+//使用echarts 作图, 设置为全局
+app.config.globalProperties.echarts = echarts;
 
 app.config.productionTip = false
 

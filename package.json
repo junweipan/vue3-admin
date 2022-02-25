@@ -21,6 +21,7 @@
     "driver.js": "0.9.5",
     "dropzone": "5.5.1",
     "echarts": "4.2.1",
+    "echarts-stat": "^1.2.0",
     "element-plus": "^1.0.1-beta.20",
     "file-saver": "2.0.1",
     "fuse.js": "3.4.4",
