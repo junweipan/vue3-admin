@@ -8,7 +8,10 @@
 </template>
 
 <script>
-const version = require('element-plus/package.json').version // element-plus version from node_modules
+// element-plus version from node_modules, 但是1.01版本已经过时, 这里手动设置为2.02
+// const version = require('element-plus/package.json').version 
+// https://www.npmjs.com/package/element-plus?activeTab=versions
+const version = '2.0.1'
 const ORIGINAL_THEME = '#409EFF' // default color
 
 export default {

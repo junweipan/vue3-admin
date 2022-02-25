@@ -1,5 +1,25 @@
 <template>
   <div class="login-container">
+    <!--粒子使用教程 https://blog.csdn.net/m0_61417250/article/details/121966840 -->
+    <vue-particles
+      class="login-bg"
+      color="#39AFFD"
+      :particleOpacity="0.7"
+      :particlesNumber="100"
+      shapeType="circle"
+      :particleSize="4"
+      linesColor="#8DD1FE"
+      :linesWidth="1"
+      :lineLinked="true"
+      :lineOpacity="0.4"
+      :linesDistance="150"
+      :moveSpeed="3"
+      :hoverEffect="true"
+      hoverMode="grab"
+      :clickEffect="true"
+      clickMode="push"
+    >
+    </vue-particles>
     <el-form
       ref="loginForm"
       :model="loginForm"
@@ -97,7 +117,9 @@
           <span>Password : any</span>
         </div>
         <div class="title-container">
-          <p class="copyright">© 2021 舟山市智慧城市运营有限公司 版权所有</p>
+          <p class="copyright">
+            © 2021 舟山市智慧城市运营有限公司 版权所有
+          </p>
         </div>
       </div>
     </el-form>
@@ -270,6 +292,10 @@ $bg: #2d3a4b;
 $dark_gray: #889aa4;
 $light_gray: #eee;
 
+#particles-js {
+  height: 100vh;
+}
+
 .login-container {
   min-height: 100%;
   width: 100%;
@@ -278,25 +304,23 @@ $light_gray: #eee;
   overflow: hidden;
 
   .login-form {
-    position: relative;
+    // position: relative;
+    // margin: 0 auto;
+    // overflow: hidden;
+    color: #ffffff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    ////////////////////////
+    text-align: center;
     width: 520px;
     max-width: 100%;
     padding: 160px 35px 0;
-    margin: 0 auto;
-    overflow: hidden;
 
-    // color: #ffffff;
-    // position: absolute;
-    // text-align: center;
-    // width: 25%;
-    // height: 50%;
-
-    // top: 0;
-    // left: 0;
-    // right: 0;
-    // bottom: 0;
-    // margin: auto;
-    .login-footer{
+    .login-footer {
       display: flex;
       flex-direction: column;
       justify-content: center;

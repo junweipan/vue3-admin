@@ -20,6 +20,7 @@ import './utils/error-log' // error log
 
 import SvgIcon from '@/components/SvgIcon'// svg component
 import * as echarts from 'echarts'
+import VueParticles from 'vue-particles'
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -47,6 +48,8 @@ app.use(ElementPlus, {
 })
 app.use(store)
 app.use(router)
+//引入login页面粒子动态
+app.use(VueParticles)
 app.mount('#app')
 
 export default app
