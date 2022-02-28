@@ -2,7 +2,7 @@ const settingRoutes =
 {
     path: '/setting-module',
     component: () => import('@/layout/index'),
-    redirect: '/setting-module/basic/branch-info',
+    redirect: '/setting-module/basic',
     name: 'Setting-Module',
     meta: {
       title: '系统设置',

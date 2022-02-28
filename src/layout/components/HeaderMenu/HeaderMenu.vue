@@ -1,13 +1,6 @@
 <template>
   <div class="navbar">
-    <hamburger
-      id="hamburger-container"
-      :is-active="sidebar.opened"
-      class="hamburger-container"
-      @toggleClick="toggleSideBar"
-    />
-    <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
-
+    <left-link></left-link>
     <div class="right-menu">
       <template v-if="device !== 'mobile'">
         <search id="header-search" class="right-menu-item" />
@@ -26,7 +19,7 @@
         trigger="click"
       >
         <div class="avatar-wrapper">
-          <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar">
+          <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar" />
           <i class="el-icon-caret-bottom" />
         </div>
         <template #dropdown>
@@ -67,18 +60,31 @@ import ErrorLog from '@/components/ErrorLog'
 import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
+import leftLink from './leftLink'
 
 export default {
+  data() {
+    return {
+      menuName: '合同管理'
+    }
+  },
   components: {
     Breadcrumb,
     Hamburger,
     ErrorLog,
     Screenfull,
     SizeSelect,
-    Search
+    Search,
+    leftLink
   },
   computed: {
     ...mapGetters(['sidebar', 'avatar', 'device'])
+  },
+  watch:{
+    $route(to, from) {
+      const path = to.matched[0].path
+      this.changeMenuText(path);
+    },
   },
   methods: {
     toggleSideBar() {
@@ -87,6 +93,26 @@ export default {
     async logout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    },
+    changeMenuText(path) {
+      switch (path) {
+        case '/contract-module':
+          this.menuName = '合同管理'
+          break
+        case '/analysis-module':
+          this.menuName = '统计分析'
+          break
+        case '/value-module':
+          this.menuName = '产值分配'
+          break
+        case '/setting-module':
+          this.menuName = '系统设置'
+          break
+        default:
+          //这里是没有找到对应的值处理
+          this.menuName = '平台主页'
+          break
+      }
     }
   }
 }
@@ -99,24 +125,13 @@ export default {
   position: relative;
   background: #fff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-
-  .hamburger-container {
-    line-height: 46px;
-    height: 100%;
-    float: left;
-    cursor: pointer;
-    transition: background 0.3s;
-    -webkit-tap-highlight-color: transparent;
-
-    &:hover {
-      background: rgba(0, 0, 0, 0.025);
-    }
+  .el-button {
+    margin-left: 17px;
   }
-
-  .breadcrumb-container {
-    float: left;
+  .el-button--text {
+    color: #5a5e66;
+    font-size: 20px;
   }
-
   .errLog-container {
     display: inline-block;
     vertical-align: top;
