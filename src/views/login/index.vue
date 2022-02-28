@@ -91,7 +91,7 @@
         </el-input>
         <span class="show-pwd" @click="showPwd">
           <img
-            src="identifyimg"
+            :src="identifyimg"
             alt="验证码图片"
             @click="refreshCode"
             class="captcha_img"
@@ -128,6 +128,7 @@
 
 <script>
 import { validUsername } from '@/utils/validate'
+import { getCaptcha } from '@/api/user'
 export default {
   name: 'Login',
   components: {},
@@ -149,7 +150,7 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: '111111',
+        password: '123456',
         validateCode: '1111'
       },
       loginRules: {
@@ -165,7 +166,8 @@ export default {
       loading: false,
       showDialog: false,
       redirect: undefined,
-      otherQuery: {}
+      otherQuery: {},
+      identifyimg: Object,
     }
   },
   watch: {
@@ -186,8 +188,16 @@ export default {
     } else if (this.loginForm.password === '') {
       this.$refs.password.focus()
     }
+
+    this.refreshCode()
   },
   methods: {
+    refreshCode() {
+      getCaptcha().then(response => {
+        console.log('img', response)
+        this.identifyimg = window.URL.createObjectURL(response.data)
+      })
+    },
     checkCapslock(e) {
       const { key } = e
       this.capsTooltip = key && key.length === 1 && key >= 'A' && key <= 'Z'
@@ -216,6 +226,7 @@ export default {
               this.loading = false
             })
             .catch(() => {
+              console.log('login error')
               this.loading = false
             })
         } else {

@@ -47,9 +47,9 @@ export default {
       return statusMap[status]
     },
     fetchData() {
-      transactionList().then(response => {
-        this.list = response.data.items.slice(0, 8)
-      })
+      // transactionList().then(response => {
+      //   this.list = response.data.items.slice(0, 8)
+      // })
     }
   }
 }

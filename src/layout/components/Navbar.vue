@@ -16,45 +16,27 @@
 
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
 
-        <!-- <el-tooltip content="Global Size" effect="dark" placement="bottom">
-          <size-select id="size-select" class="right-menu-item hover-effect" />
-        </el-tooltip> -->
+        <img
+          :src="avatar + '?imageView2/1/w/80/h/80'"
+          class="user-avatar right-menu-item hover-effect"
+        />
+
+        <el-select
+          v-model="value"
+          class="m-2 right-menu-item hover-effect"
+          placeholder="role"
+          size="large"
+        >
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
       </template>
 
-      <el-dropdown
-        class="avatar-container right-menu-item hover-effect"
-        trigger="click"
-      >
-        <div class="avatar-wrapper">
-          <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar">
-          <i class="el-icon-caret-bottom" />
-        </div>
-        <template #dropdown>
-          <el-dropdown-menu>
-            <router-link to="/profile/index">
-              <el-dropdown-item>Profile</el-dropdown-item>
-            </router-link>
-            <router-link to="/">
-              <el-dropdown-item>Dashboard</el-dropdown-item>
-            </router-link>
-            <a
-              target="_blank"
-              href="https://github.com/PanJiaChen/vue-element-admin/"
-            >
-              <el-dropdown-item>Github</el-dropdown-item>
-            </a>
-            <a
-              target="_blank"
-              href="https://panjiachen.github.io/vue-element-admin-site/#/"
-            >
-              <el-dropdown-item>Docs</el-dropdown-item>
-            </a>
-            <el-dropdown-item divided @click="logout">
-              <span style="display: block">Log Out</span>
-            </el-dropdown-item>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
     </div>
   </div>
 </template>
@@ -67,7 +49,7 @@ import ErrorLog from '@/components/ErrorLog'
 import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
-
+import UserCard from "./UserCard";
 export default {
   components: {
     Breadcrumb,
@@ -75,7 +57,35 @@ export default {
     ErrorLog,
     Screenfull,
     SizeSelect,
-    Search
+    Search,
+    UserCard
+  },
+  data() {
+    return {
+      value:'',
+      options: [
+        {
+          value: 'Option1',
+          label: 'Option1'
+        },
+        {
+          value: 'Option2',
+          label: 'Option2'
+        },
+        {
+          value: 'Option3',
+          label: 'Option3'
+        },
+        {
+          value: 'Option4',
+          label: 'Option4'
+        },
+        {
+          value: 'Option5',
+          label: 'Option5'
+        }
+      ]
+    }
   },
   computed: {
     ...mapGetters(['sidebar', 'avatar', 'device'])

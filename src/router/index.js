@@ -77,31 +77,6 @@ export const constantRoutes = [
       }
     ]
   },
-  // {
-  //   path: '/documentation',
-  //   component: () => import('@/layout/index'),
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/documentation/index'),
-  //       name: 'Documentation',
-  //       meta: { title: 'Documentation', icon: 'documentation', affix: true }
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: '/guide',
-  //   component: () => import('@/layout/index'),
-  //   redirect: '/guide/index',
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/guide/index'),
-  //       name: 'Guide',
-  //       meta: { title: 'Guide', icon: 'guide', noCache: true }
-  //     }
-  //   ]
-  // },
   {
     path: '/profile',
     component: () => import('@/layout/index'),
@@ -170,13 +145,6 @@ export const asyncRoutes = [
   // },
   // 404 page must be placed at the end !!!
   { path: '/:catchAll(.*)', redirect: '/404', hidden: true }
-  // {
-  //   path: '*',
-  //   component: () => import(''),
-  //   children: [],
-  //   redirect: '/404',
-  //   hidden: true
-  // }
 ]
 
 const createCustomRouter = () =>

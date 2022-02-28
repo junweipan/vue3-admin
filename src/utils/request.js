@@ -46,10 +46,11 @@ service.interceptors.response.use(
      * You can also judge the status by HTTP Status Code
      */
   response => {
-    const res = response.data
+    const res = response
 
-    // if the custom code is not 20000, it is judged as an error.
-    if (res.code !== 20000) {
+   // if the custom status is not 200, it is judged as an error.
+    // backend return 200 or 0, 任何一个code都可以表示是成功
+    if (res.status !== 200 && res.status !== 0) {
       ElMessage({
         message: res.message || 'Error',
         type: 'error',
