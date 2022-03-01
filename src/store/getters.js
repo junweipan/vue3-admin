@@ -12,6 +12,7 @@ const getters = {
   operator: state => state.user.operator,
   currentRoleID: state => state.user.currentRoleID,
   permission_routes: state => state.permission.routes,
+  constantRoutes: state => state.permission.constantRoutes,
   errorLogs: state => state.errorLog.logs
 }
 export default getters

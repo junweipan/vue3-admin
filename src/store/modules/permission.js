@@ -34,19 +34,66 @@ export function filterAsyncRoutes(routes, roles) {
   return res
 }
 
+/**
+ * Use meta.module 来判断sidebar显示的路由内容
+ * @param module
+ * @param route
+ */
+ function checkModule(module, route) {
+  if (route.meta && route.meta.module) {
+    return route.meta.module.includes(module)
+  } else {
+    return true
+  }
+}
+
+/**
+ * 根据meta.module过滤路由
+ * @param routes asyncRoutes
+ * @param module
+ */
+ export function filterAsyncRoutesByModule(routes, module) {
+  const res = []
+
+  routes.forEach(route => {
+    const tmp = { ...route }
+    if (checkModule(module, tmp)) {
+      if (tmp.children) {
+        tmp.children = filterAsyncRoutesByModule(tmp.children, module)
+      }
+      res.push(tmp)
+    }
+  })
+
+
+  return res
+}
+
 const state = {
   routes: [],
-  addRoutes: []
+  addRoutes: [],
+  constantRoutes: constantRoutes
 }
 
 const mutations = {
   SET_ROUTES: (state, routes) => {
     state.addRoutes = routes
+    // state.routes = constantRoutes.concat(routes)
+    state.routes = constantRoutes.concat(routes)
+  },
+  SET_FILTERED_ROUTES: (state, routes) => {
     state.routes = constantRoutes.concat(routes)
   }
 }
 
 const actions = {
+  filterRoutes({ commit }, module) {
+    return new Promise(resolve => {
+      const filteredRoutes = filterAsyncRoutesByModule(asyncRoutes, module)
+      commit('SET_FILTERED_ROUTES', filteredRoutes)
+      resolve(filteredRoutes)
+    })
+  },
   generateRoutes({ commit }, roles) {
     return new Promise(resolve => {
       let accessedRoutes

@@ -50,16 +50,23 @@
 </template>
 
 <script>
-
+import { mapGetters } from 'vuex'
 import IconTextButton from './iconTextButton.vue'
 export default {
   data() {
     return {
-      menuName: '合同管理'
+      menuName: '平台主页'
     }
+  },
+  computed: {
+    ...mapGetters(['permission_routes'])
   },
   components: {
     IconTextButton
+  },
+  mounted() {
+    const path = this.$route.matched[0].path
+    this.changeMenuText(path);
   },
   watch:{
     $route(to, from) {
@@ -72,6 +79,8 @@ export default {
       switch (path) {
         case '/contract-module':
           this.menuName = '合同管理'
+          this.$store.dispatch('permission/filterRoutes','contract')
+          console.log('new routes', this.permission_routes)
           break
         case '/analysis-module':
           this.menuName = '统计分析'
