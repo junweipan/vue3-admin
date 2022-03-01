@@ -60,7 +60,7 @@ import ErrorLog from '@/components/ErrorLog'
 import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
-import leftLink from './leftLink'
+import LeftLink from './LeftLink'
 
 export default {
   data() {
@@ -75,7 +75,7 @@ export default {
     Screenfull,
     SizeSelect,
     Search,
-    leftLink
+    LeftLink
   },
   computed: {
     ...mapGetters(['sidebar', 'avatar', 'device'])

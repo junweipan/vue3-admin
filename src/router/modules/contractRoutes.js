@@ -5,7 +5,8 @@ const contractRoutes = {
   name: 'Contract-Module',
   meta: {
     title: '合同管理',
-    icon: 'nested'
+    icon: 'nested',
+    module:'contract'
   },
   children: [
     {

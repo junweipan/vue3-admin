@@ -33,9 +33,9 @@ export function getInfo(oprid) {
   })
 }
 
-// export function logout() {
-//   return request({
-//     url: '/vue-element-admin/user/logout',
-//     method: 'post'
-//   })
-// }
+export function logout() {
+  return request({
+    url: 'user/logout',
+    method: 'post'
+  })
+}
