@@ -2,7 +2,7 @@
   <div class="userCard">
     <span><i class="el-icon-location"></i>{{ branch }}</span>
     <div class="checkTag">
-      <span><i class="el-icon-s-custom"></i>{{ roleType | roleTypeFormat}} </span>
+      <span><i class="el-icon-s-custom"></i>{{ roleType }} </span>
       <el-tag><i style="cursor: pointer">{{ roleName }}</i></el-tag>
     </div>
   </div>

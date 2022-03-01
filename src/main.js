@@ -44,7 +44,7 @@ app.config.productionTip = false
 app.component('SvgIcon', SvgIcon)
 app.use(ElementPlus, {
   size: Cookies.get('size') || 'medium', // set element-ui default size
-  locale: enLang // 如果使用中文，无需设置，请删除
+  // locale: enLang // 如果使用中文，无需设置，请删除
 })
 app.use(store)
 app.use(router)

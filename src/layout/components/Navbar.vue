@@ -20,23 +20,46 @@
           :src="avatar + '?imageView2/1/w/80/h/80'"
           class="user-avatar right-menu-item hover-effect"
         />
+        <div class="right-menu-item hover-effect">
+          <el-dropdown :hide-on-click="true" trigger="click">
+            <el-button type="primary">
+              {{ roleName }}<el-icon class="el-icon--right"></el-icon>
+            </el-button>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item
+                  v-for="role in operator.roleInfoList"
+                  @click="selectRole(role)"
+                >
+                  <user-card
+                    :id="role.roleId"
+                    :branch="operator.brhName"
+                    :roleType="role.roleType"
+                    :roleName="role.roleName"
+                  ></user-card>
+                </el-dropdown-item>
+              </el-dropdown-menu>
 
-        <el-select
-          v-model="value"
-          class="m-2 right-menu-item hover-effect"
-          placeholder="role"
-          size="large"
-        >
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          >
-          </el-option>
-        </el-select>
+              <el-dropdown-menu>
+                <el-dropdown-item>
+                  <el-row>
+                    <el-col :span="12" style="width: 100%; text-align: center">
+                      <el-button type="primary" @click.native="onEditInfo" plain
+                        >修改信息</el-button
+                      >
+                    </el-col>
+                    <el-col :span="12" style="width: 100%; text-align: center">
+                      <el-button type="warning" @click.native="onLogout" plain
+                        >安全退出</el-button
+                      >
+                    </el-col>
+                  </el-row>
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
+        </div>
       </template>
-
     </div>
   </div>
 </template>
@@ -49,7 +72,7 @@ import ErrorLog from '@/components/ErrorLog'
 import Screenfull from '@/components/Screenfull'
 import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
-import UserCard from "./UserCard";
+import UserCard from './UserCard'
 export default {
   components: {
     Breadcrumb,
@@ -62,39 +85,28 @@ export default {
   },
   data() {
     return {
-      value:'',
-      options: [
-        {
-          value: 'Option1',
-          label: 'Option1'
-        },
-        {
-          value: 'Option2',
-          label: 'Option2'
-        },
-        {
-          value: 'Option3',
-          label: 'Option3'
-        },
-        {
-          value: 'Option4',
-          label: 'Option4'
-        },
-        {
-          value: 'Option5',
-          label: 'Option5'
-        }
-      ]
+      roleName: ''
     }
   },
   computed: {
-    ...mapGetters(['sidebar', 'avatar', 'device'])
+    ...mapGetters(['sidebar', 'avatar', 'device', 'operator'])
+  },
+  mounted() {
+    this.roleName = this.operator.roleName
+    console.log('this.operator', this.operator)
   },
   methods: {
+    onEditInfo(event) {
+      console.log(event)
+    },
+    selectRole(role) {
+      console.log('role', role)
+      this.roleName = role.roleName
+    },
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },
-    async logout() {
+    async onLogout() {
       await this.$store.dispatch('user/logout')
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
@@ -103,6 +115,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.el-dropdown-menu {
+  overflow: scroll;
+  max-height: 200px;
+}
 .navbar {
   height: 50px;
   overflow: hidden;
@@ -168,8 +184,8 @@ export default {
 
         .user-avatar {
           cursor: pointer;
-          width: 40px;
-          height: 40px;
+          width: 30px;
+          height: 30px;
           border-radius: 10px;
         }
 

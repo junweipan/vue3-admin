@@ -149,7 +149,7 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
+        username: 'system',
         password: '123456',
         validateCode: '1111'
       },

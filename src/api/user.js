@@ -34,8 +34,9 @@ export function getInfo(oprid) {
 }
 
 export function logout() {
+  console.log("logout")
   return request({
-    url: 'user/logout',
-    method: 'post'
+    url:  'system/loginout',
+    method: 'post',
   })
 }
