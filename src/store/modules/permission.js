@@ -81,16 +81,13 @@ const mutations = {
     // state.routes = constantRoutes.concat(routes)
     state.routes = constantRoutes.concat(routes)
   },
-  SET_FILTERED_ROUTES: (state, routes) => {
-    state.routes = constantRoutes.concat(routes)
-  }
 }
 
 const actions = {
   filterRoutes({ commit }, module) {
     return new Promise(resolve => {
       const filteredRoutes = filterAsyncRoutesByModule(asyncRoutes, module)
-      commit('SET_FILTERED_ROUTES', filteredRoutes)
+      commit('SET_ROUTES', filteredRoutes)
       resolve(filteredRoutes)
     })
   },

@@ -33,20 +33,21 @@ export default {
   components: { SidebarItem, Logo },
   data() {
     return {
-      filteredRoutes:null
+      filteredRoutes: null
     }
   },
   mounted() {
+    // 初始化时只加载静态路由
     this.filteredRoutes = this.constantRoutes
   },
   watch: {
+    //切换模块后会改变store中的permission_routes, 这里监视该变量,改变后刷新路由
     permission_routes(value) {
-      console.log('routes changes', value);
       this.filteredRoutes = value
     }
   },
   computed: {
-    ...mapGetters(['permission_routes', 'sidebar','constantRoutes']),
+    ...mapGetters(['permission_routes', 'sidebar', 'constantRoutes']),
     activeMenu() {
       const route = this.$route
       const { meta, path } = route

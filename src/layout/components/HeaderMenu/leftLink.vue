@@ -55,7 +55,7 @@ import IconTextButton from './iconTextButton.vue'
 export default {
   data() {
     return {
-      menuName: '平台主页'
+      menuName: ''
     }
   },
   computed: {
@@ -65,35 +65,42 @@ export default {
     IconTextButton
   },
   mounted() {
+    // 根据当前路由来设置menuName的值
     const path = this.$route.matched[0].path
     this.changeMenuText(path);
   },
   watch:{
+    // 当前路由改变时, 刷新menuName的值
     $route(to, from) {
       const path = to.matched[0].path
       this.changeMenuText(path);
     },
   },
   methods: {
+    // 根据meta.module过滤不同路由并展示到sidebar
     changeMenuText(path) {
       switch (path) {
         case '/contract-module':
           this.menuName = '合同管理'
           this.$store.dispatch('permission/filterRoutes','contract')
-          console.log('new routes', this.permission_routes)
           break
         case '/analysis-module':
           this.menuName = '统计分析'
+          this.$store.dispatch('permission/filterRoutes','analysis')
           break
         case '/value-module':
           this.menuName = '产值分配'
+          this.$store.dispatch('permission/filterRoutes','value')
           break
         case '/setting-module':
           this.menuName = '系统设置'
+          this.$store.dispatch('permission/filterRoutes','setting')
           break
         default:
           //这里是没有找到对应的值处理
           this.menuName = '平台主页'
+          this.$store.dispatch('permission/filterRoutes','null')
+          console.log('平台主页', this.permission_routes);
           break
       }
     }
