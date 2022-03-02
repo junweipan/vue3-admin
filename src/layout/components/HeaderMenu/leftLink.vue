@@ -53,6 +53,7 @@
 import { mapGetters } from 'vuex'
 import IconTextButton from './iconTextButton.vue'
 export default {
+  name:'LeftLink',
   data() {
     return {
       menuName: ''
