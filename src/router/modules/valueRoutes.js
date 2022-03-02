@@ -1,3 +1,12 @@
+// 角色ID  角色名称
+// 1	   开发人员
+// 11	   超级管理员
+// 19	   公司领导
+// 21	   工程主持人
+// 22	   产值分配经办人
+// 62	   中层领导（财务主管所室负责人）
+// 64	   普通员工
+// 65	   产值工作人员
 const valueRoutes = {
   path: '/value-module',
   component: () => import('@/layout/index'),
@@ -8,7 +17,7 @@ const valueRoutes = {
     title: '产值分配',
     icon: 'lock',
     roles: ['admin', 'editor'], // you can set roles in root nav
-    module: 'value'
+    module: '/value-module'
   },
   children: [
     {
@@ -20,7 +29,7 @@ const valueRoutes = {
         roles: ['admin'], // or you can only set roles in sub nav
         affix: false,
         icon: 'el-icon-s-order',
-        module: 'value'
+        module: '/value-module'
       }
     },
     {
@@ -30,7 +39,7 @@ const valueRoutes = {
       meta: {
         title: '产值分配-菜单功能1',
         icon: 'el-icon-notebook-1',
-        module: 'value'
+        module: '/value-module'
       }
     },
     {
@@ -40,7 +49,7 @@ const valueRoutes = {
       meta: {
         title: '产值分配-菜单功能2',
         icon: 'el-icon-s-order',
-        module: 'value'
+        module: '/value-module'
       }
     }
   ]

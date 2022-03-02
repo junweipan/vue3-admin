@@ -66,6 +66,15 @@
 </template>
 
 <script>
+// 角色ID  角色名称
+// 1	   开发人员
+// 11	   超级管理员
+// 19	   公司领导
+// 21	   工程主持人
+// 22	   产值分配经办人
+// 62	   中层领导（财务主管所室负责人）
+// 64	   普通员工
+// 65	   产值工作人员
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
@@ -90,7 +99,14 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['sidebar', 'avatar', 'device', 'operator'])
+    ...mapGetters([
+      'sidebar',
+      'avatar',
+      'device',
+      'operator',
+      'currentRoleID',
+      'permission_routes'
+    ])
   },
   mounted() {
     this.roleName = this.operator.roleName
@@ -101,8 +117,23 @@ export default {
       console.log(event)
     },
     selectRole(role) {
-      console.log('role', role)
       this.roleName = role.roleName
+      //刷新roleID -> store, cookie
+      this.$store.dispatch('user/changeRole', role.roleId)
+      // console.log('currentRoleID', this.currentRoleID)
+      //根据module和role刷新sidebar menu
+      const path = this.$route.matched[0].path
+      // console.log('path', path)
+      if (path == '/') {
+        return
+      }
+      const payload = { module: path, roles: [this.currentRoleID] }
+      this.$store.dispatch('permission/filterRoutesByModuleRoles', payload)
+
+      // console.log(
+      //   'change role permission_routes',
+      //   this.permission_routes[7].children[0]
+      // )
     },
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')

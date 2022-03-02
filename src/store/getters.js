@@ -8,8 +8,10 @@ const getters = {
   avatar: state => state.user.avatar,
   name: state => state.user.name,
   introduction: state => state.user.introduction,
+  //临时变量, 会被优化掉
   roles: state => state.user.roles,
   operator: state => state.user.operator,
+  //控制sidebar显示 和 v-permission button级别显示
   currentRoleID: state => state.user.currentRoleID,
   permission_routes: state => state.permission.routes,
   constantRoutes: state => state.permission.constantRoutes,

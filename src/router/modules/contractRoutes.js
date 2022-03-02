@@ -1,3 +1,12 @@
+// 角色ID  角色名称
+// 1	   开发人员
+// 11	   超级管理员
+// 19	   公司领导
+// 21	   工程主持人
+// 22	   产值分配经办人
+// 62	   中层领导（财务主管所室负责人）
+// 64	   普通员工
+// 65	   产值工作人员
 const contractRoutes = {
   path: '/contract-module',
   component: () => import('@/layout/index'),
@@ -6,7 +15,7 @@ const contractRoutes = {
   meta: {
     title: '合同管理',
     icon: 'nested',
-    module: 'contract'
+    module: '/contract-module'
   },
   children: [
     {
@@ -17,7 +26,7 @@ const contractRoutes = {
         title: '合同管理-主页',
         icon: 'dashboard',
         affix: false,
-        module: 'contract'
+        module: '/contract-module'
       }
     },
     {
@@ -27,7 +36,7 @@ const contractRoutes = {
       meta: {
         title: '合同管理-系统日志',
         icon: 'el-icon-s-order',
-        module: 'contract'
+        module: '/contract-module'
       }
     },
     {
@@ -37,7 +46,7 @@ const contractRoutes = {
       meta: {
         title: '合同管理-功能管理',
         icon: 'el-icon-collection-tag',
-        module: 'contract'
+        module: '/contract-module'
       }
     },
     {
@@ -47,7 +56,7 @@ const contractRoutes = {
       meta: {
         title: '合同管理-数据测试',
         icon: 'el-icon-s-grid',
-        module: 'contract'
+        module: '/contract-module'
       }
     },
     {
@@ -57,7 +66,7 @@ const contractRoutes = {
       meta: {
         title: '合同管理-数据测试-修改',
         icon: 'el-icon-s-grid',
-        module:'contract'
+        module: '/contract-module'
       }
     }
   ]

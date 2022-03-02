@@ -112,7 +112,6 @@ export default {
     },
     moveToCurrentTag() {
       const tags = this.$refs.tag
-      console.log(tags)
       this.$nextTick(() => {
         // bug修复: https://github.com/RainManGO/vue3-composition-admin/pull/42
         if (tags === null || tags === undefined || !Array.isArray(tags)) { return }

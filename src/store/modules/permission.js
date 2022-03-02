@@ -69,6 +69,28 @@ export function filterAsyncRoutes(routes, roles) {
   return res
 }
 
+/**
+ * 根据meta.module, meta.roles过滤路由
+ * @param routes asyncRoutes
+ * @param module
+ * @param roles 当前操作者的角色
+ */
+ export function filterAsyncRoutesByModuleRoles(routes, module,roles) {
+  const res = []
+
+  routes.forEach(route => {
+    const tmp = { ...route }
+    if (checkModule(module, tmp) && hasPermission(roles, route)) {
+      if (tmp.children) {
+        tmp.children = filterAsyncRoutesByModuleRoles(tmp.children, module, roles)
+      }
+      res.push(tmp)
+    }
+  })
+
+  return res
+}
+
 const state = {
   routes: [],
   addRoutes: [],
@@ -87,6 +109,14 @@ const actions = {
   filterRoutes({ commit }, module) {
     return new Promise(resolve => {
       const filteredRoutes = filterAsyncRoutesByModule(asyncRoutes, module)
+      commit('SET_ROUTES', filteredRoutes)
+      resolve(filteredRoutes)
+    })
+  },
+  
+  filterRoutesByModuleRoles({ commit }, payload) {
+    return new Promise(resolve => {
+      const filteredRoutes = filterAsyncRoutesByModuleRoles(asyncRoutes, payload.module, payload.roles)
       commit('SET_ROUTES', filteredRoutes)
       resolve(filteredRoutes)
     })

@@ -79,6 +79,7 @@ export default {
   methods: {
     // 根据meta.module过滤不同路由并展示到sidebar
     changeMenuText(path) {
+      
       switch (path) {
         case '/contract-module':
           this.menuName = '合同管理'
@@ -94,13 +95,13 @@ export default {
           break
         case '/setting-module':
           this.menuName = '系统设置'
-          this.$store.dispatch('permission/filterRoutes','setting')
+          const payload = {module:'/setting-module',roles:['editor','sky']}
+          this.$store.dispatch('permission/filterRoutesByModuleRoles',payload)
           break
         default:
           //这里是没有找到对应的值处理
           this.menuName = '平台主页'
           this.$store.dispatch('permission/filterRoutes','null')
-          console.log('平台主页', this.permission_routes);
           break
       }
     }

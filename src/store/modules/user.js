@@ -45,7 +45,7 @@ const mutations = {
 }
 
 const actions = {
-  changeRole({ commit,state }, roleId){
+  changeRole({ commit }, roleId){
     //刷新cookie和store中的current role ID
     commit('SET_CURRENT_ROLE_ID', roleId)
     setRoleID(roleId)
