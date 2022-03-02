@@ -2,15 +2,17 @@
   <div class="userCard">
     <span><i class="el-icon-location"></i>{{ branch }}</span>
     <div class="checkTag">
-      <span><i class="el-icon-s-custom"></i>{{ roleType }} </span>
-      <el-tag><i style="cursor: pointer">{{ roleName }}</i></el-tag>
+      <span><i class="el-icon-s-custom"></i>{{ roleTypeFormat }} </span>
+      <el-tag
+        ><i style="cursor: pointer">{{ roleName }}</i></el-tag
+      >
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "UserCard",
+  name: 'UserCard',
   components: {},
   props: {
     id: {
@@ -21,36 +23,49 @@ export default {
     branch: {
       // e.g.舟山市规划建筑设计院有限公司
       type: String,
-      default: "",
+      default: ''
     },
     roleType: {
       // e.g.本级
       type: String,
-      default: "",
+      default: ''
     },
     roleName: {
       // e.g.开发
       type: String,
-      default: "",
-    },
+      default: ''
+    }
   },
   data() {
     return {
       // 样式替换变量
-      elIconCheck: "el-icon-check",
-    };
+      elIconCheck: 'el-icon-check'
+    }
   },
   filters: {},
-  computed: {},
+  computed: {
+    roleTypeFormat() {
+      switch (this.roleType) {
+        case '01':
+          return '汇总'
+        case '02':
+          return '本级'
+        default:
+          return '本级'
+      }
+    }
+  },
   created() {},
   watch: {},
-  methods: {},
-};
+  methods: {}
+}
 </script>
 
 <style lang="scss" scoped>
 // 去掉i默认斜体样式
-i{ font-style:normal}
+i {
+  font-style: normal;
+}
 
 .selected {
   color: #409eff;
@@ -124,4 +139,3 @@ i{ font-style:normal}
   background-color: #f9fafc;
 }
 </style>
-

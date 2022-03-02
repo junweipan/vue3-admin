@@ -23,7 +23,8 @@
         <div class="right-menu-item hover-effect">
           <el-dropdown :hide-on-click="true" trigger="click">
             <el-button type="primary">
-              {{ roleName }}<el-icon class="el-icon--right"></el-icon>
+              <i class="el-icon-user"></i>{{ roleName
+              }}<el-icon class="el-icon--right"></el-icon>
             </el-button>
             <template #dropdown>
               <el-dropdown-menu>
@@ -40,7 +41,7 @@
                 </el-dropdown-item>
               </el-dropdown-menu>
 
-              <el-dropdown-menu>
+              <el-dropdown-menu class="logout">
                 <el-dropdown-item>
                   <el-row>
                     <el-col :span="12" style="width: 100%; text-align: center">
@@ -115,9 +116,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.logout {
+  overflow: hidden;
+}
 .el-dropdown-menu {
-  overflow: scroll;
   max-height: 200px;
+  overflow-x: hidden;
 }
 .navbar {
   height: 50px;
