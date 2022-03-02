@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import LeftLink from './LeftLink.vue'
+import LeftLink from './leftLink.vue'
 export default {
   components: {
     LeftLink

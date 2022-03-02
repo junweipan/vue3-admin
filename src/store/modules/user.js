@@ -61,7 +61,8 @@ const actions = {
         const { oprId, roleId, oprName, roleInfoList, roleName, roleType, brhName } = operator
         //存入operator -> store
         commit('SET_OPERATOR', operator)
-        // commit('SET_CURRENT_ROLE_ID', operator.roleId)
+        commit('SET_CURRENT_ROLE_ID', operator.roleId)
+        console.log('SET_CURRENT_ROLE_ID',operator.roleId);
         // 存入cookie
         setToken(fakeToken)
         setOperator(operator)
