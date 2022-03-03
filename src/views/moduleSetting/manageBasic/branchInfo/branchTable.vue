@@ -133,7 +133,6 @@
 import api from "@/api/personInfoMock";
 import { mapGetters } from 'vuex'
 // import Edit from "./edit";
-import permission from "@/directive/permission/index.js"; // 权限判断指令
 import branchData from "./branchInfo.json";
 const brhTypes = [
   { code: "00", brhType: "集团本级" },
@@ -146,7 +145,6 @@ export default {
   components: {
     // edit: Edit, // Edit: Edit
   },
-  directives: { permission },
   data() {
     return {
       tableData: branchData.arrayList,

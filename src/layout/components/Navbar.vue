@@ -110,7 +110,7 @@ export default {
   },
   mounted() {
     this.roleName = this.operator.roleName
-    console.log('this.operator', this.operator)
+    // console.log('this.operator', this.operator)
   },
   methods: {
     onEditInfo(event) {
@@ -120,7 +120,7 @@ export default {
       this.roleName = role.roleName
       //刷新roleID -> store, cookie
       this.$store.dispatch('user/changeRole', role.roleId)
-      // console.log('currentRoleID', this.currentRoleID)
+      // console.log('changeRole currentRoleID', this.currentRoleID)
       //根据module和role刷新sidebar menu
       const path = this.$route.matched[0].path
       // console.log('path', path)
