@@ -28,6 +28,7 @@ router.beforeEach(async (to, from, next) => {
       // const hasRoles = store.getters.roles && store.getters.roles.length > 0
       // 若store中没有currentRoleID的值, 会进入else, 在await store.dispatch('user/getInfo')中给currentRoleID赋值
       const hasRoles = store.getters.currentRoleID !== null
+      console.log('hasRoles',hasRoles);
       if (hasRoles) {
         next()
       } else {
@@ -35,7 +36,8 @@ router.beforeEach(async (to, from, next) => {
           // get user info
           // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
           const { roles } = await store.dispatch('user/getInfo')
-          // generate accessible routes map based on roles
+          // generate accessible routes map based on roles, 
+          // 这里accessRoutes会被后面覆盖,不用在意初router始值
           const accessRoutes = await store.dispatch(
             'permission/generateRoutes',
             ['admin']
@@ -52,7 +54,8 @@ router.beforeEach(async (to, from, next) => {
           await store.dispatch('user/resetToken')
           ElMessage.error(error || 'Has Error')
           // next(`/login?redirect=${to.path}`)
-          next(`/login?redirect=${to.path}`)
+          //刷新页面后一律回到主页面
+          next(`/login?redirect=/`)
           NProgress.done()
         }
       }
@@ -65,7 +68,9 @@ router.beforeEach(async (to, from, next) => {
       next()
     } else {
       // other pages that do not have permission to access are redirected to the login page.
-      next(`/login?redirect=${to.path}`)
+      // next(`/login?redirect=${to.path}`)
+      //刷新页面后一律回到主页面
+      next(`/login?redirect=/`)
       NProgress.done()
     }
   }
