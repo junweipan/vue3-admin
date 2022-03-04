@@ -1,7 +1,7 @@
 <template>
     <div>
       <h1>branchInfo</h1>
-        <!-- <branch-table></branch-table> -->
+        <branch-table></branch-table>
     </div>
 </template>
 

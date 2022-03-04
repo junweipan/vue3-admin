@@ -16,7 +16,6 @@ const valueRoutes = {
   meta: {
     title: '产值分配',
     icon: 'lock',
-    roles: ['admin', 'editor'], // you can set roles in root nav
     module: '/value-module'
   },
   children: [
@@ -26,7 +25,7 @@ const valueRoutes = {
       name: 'Dashboard-Value',
       meta: {
         title: '产值分配 主页',
-        roles: ['admin'], // or you can only set roles in sub nav
+        // roles: ['admin'], // or you can only set roles in sub nav
         affix: false,
         icon: 'el-icon-s-order',
         module: '/value-module'

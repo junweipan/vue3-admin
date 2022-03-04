@@ -28,20 +28,29 @@ router.beforeEach(async (to, from, next) => {
       // const hasRoles = store.getters.roles && store.getters.roles.length > 0
       // 若store中没有currentRoleID的值, 会进入else, 在await store.dispatch('user/getInfo')中给currentRoleID赋值
       const hasRoles = store.getters.currentRoleID !== null
-      console.log('hasRoles',hasRoles);
+      console.log('hasRoles', hasRoles)
       if (hasRoles) {
+        // 这里accessRoutes直接获取整个asyncRoutes,初始化router
+        const accessRoutes = await store.dispatch(
+          'permission/generateAsyncRoutes'
+        )
+        console.log('hasrole accessRoutes ', accessRoutes)
+        // dynamically add accessible routes
+        for (const item of accessRoutes) {
+          router.addRoute(item)
+        }
         next()
       } else {
         try {
           // get user info
-          // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
-          const { roles } = await store.dispatch('user/getInfo')
-          // generate accessible routes map based on roles, 
-          // 这里accessRoutes会被后面覆盖,不用在意初router始值
+          // 功能: call 后端, 把operator, roleId放入store 和 cookie
+          await store.dispatch('user/getInfo')
+
+          // 这里accessRoutes直接获取整个asyncRoutes,初始化router
           const accessRoutes = await store.dispatch(
-            'permission/generateRoutes',
-            ['admin']
+            'permission/generateAsyncRoutes'
           )
+          console.log('no hasrole accessRoutes', accessRoutes)
           // dynamically add accessible routes
           for (const item of accessRoutes) {
             router.addRoute(item)

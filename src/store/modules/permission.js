@@ -39,7 +39,7 @@ export function filterAsyncRoutes(routes, roles) {
  * @param module
  * @param route
  */
- function checkModule(module, route) {
+function checkModule(module, route) {
   if (route.meta && route.meta.module) {
     return route.meta.module.includes(module)
   } else {
@@ -52,7 +52,7 @@ export function filterAsyncRoutes(routes, roles) {
  * @param routes asyncRoutes
  * @param module
  */
- export function filterAsyncRoutesByModule(routes, module) {
+export function filterAsyncRoutesByModule(routes, module) {
   const res = []
 
   routes.forEach(route => {
@@ -65,7 +65,6 @@ export function filterAsyncRoutes(routes, roles) {
     }
   })
 
-
   return res
 }
 
@@ -75,14 +74,18 @@ export function filterAsyncRoutes(routes, roles) {
  * @param module
  * @param roles 当前操作者的角色
  */
- export function filterAsyncRoutesByModuleRoles(routes, module,roles) {
+export function filterAsyncRoutesByModuleRoles(routes, module, roles) {
   const res = []
 
   routes.forEach(route => {
     const tmp = { ...route }
     if (checkModule(module, tmp) && hasPermission(roles, route)) {
       if (tmp.children) {
-        tmp.children = filterAsyncRoutesByModuleRoles(tmp.children, module, roles)
+        tmp.children = filterAsyncRoutesByModuleRoles(
+          tmp.children,
+          module,
+          roles
+        )
       }
       res.push(tmp)
     }
@@ -102,7 +105,7 @@ const mutations = {
     state.addRoutes = routes
     // state.routes = constantRoutes.concat(routes)
     state.routes = constantRoutes.concat(routes)
-  },
+  }
 }
 
 const actions = {
@@ -113,26 +116,37 @@ const actions = {
       resolve(filteredRoutes)
     })
   },
-  
+
   filterRoutesByModuleRoles({ commit }, payload) {
     return new Promise(resolve => {
-      const filteredRoutes = filterAsyncRoutesByModuleRoles(asyncRoutes, payload.module, payload.roles)
+      const filteredRoutes = filterAsyncRoutesByModuleRoles(
+        asyncRoutes,
+        payload.module,
+        payload.roles
+      )
+      console.log('filteredRoutes', filteredRoutes)
       commit('SET_ROUTES', filteredRoutes)
       resolve(filteredRoutes)
     })
   },
-  generateRoutes({ commit }, roles) {
+  generateAsyncRoutes({ commit }) {
     return new Promise(resolve => {
-      let accessedRoutes
-      if (roles.includes('admin')) {
-        accessedRoutes = asyncRoutes || []
-      } else {
-        accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-      }
-      commit('SET_ROUTES', accessedRoutes)
-      resolve(accessedRoutes)
+      commit('SET_ROUTES', asyncRoutes)
+      resolve(asyncRoutes)
     })
-  }
+  },
+  // generateRoutes({ commit }, roles) {
+  //   return new Promise(resolve => {
+  //     let accessedRoutes
+  //     if (roles.includes('admin')) {
+  //       accessedRoutes = asyncRoutes || []
+  //     } else {
+  //       accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
+  //     }
+  //     commit('SET_ROUTES', accessedRoutes)
+  //     resolve(accessedRoutes)
+  //   })
+  // }
 }
 
 export default {

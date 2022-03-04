@@ -96,6 +96,12 @@
 
 ## 开发
 
+准备: 
+1, 安装node   官网: Node.jshttps://nodejs.org
+2, 后台使用: 产值分配管理平台 (需要本地运行) 
+http://localhost:8080/ZSADConsole_war_exploded/
+
+
 ```bash
 # 进入本项目目录
 cd vue3-admin
@@ -107,7 +113,7 @@ npm install
 npm install --registry=https://registry.npm.taobao.org
 
 # 启动服务
-npm run dev
+npm run dev 或者 yarn run dev
 ```
 
 浏览器访问 http://localhost:9527

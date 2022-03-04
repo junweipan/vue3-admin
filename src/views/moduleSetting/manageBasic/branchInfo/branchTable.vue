@@ -4,7 +4,7 @@
       <div class="grid-text">查询条件</div>
     </div>
     <!-- 条件查询 -->
-    <el-form :inline="true" :model="query" size="mini">
+    <!-- <el-form :inline="true" :model="query" size="mini">
       <el-form-item label="机构名称:">
         <el-input v-model.trim="query.role"></el-input>
       </el-form-item>
@@ -51,10 +51,10 @@
         >
         <el-button icon="el-icon-refresh" @click="reload">重置</el-button>
       </el-form-item>
-    </el-form>
+    </el-form> -->
 
     <!--显示主要数据table 选中行显示高亮highlight-current-row的样式为全局styles/common.scss中配置-->
-    <el-table
+    <!-- <el-table
       :data="tableData"
       style="width: 100%; margin-bottom: 20px"
       row-key="extData.brhId"
@@ -86,14 +86,12 @@
 
       <el-table-column prop="extData.upBrhId" label="上级机构名称 " width="auto"
         ><template slot-scope="scope">{{
-          scope.row.extData.upBrhId | upBranchIdFormat
-        }}</template>
+          scope.row.extData.upBrhId }}</template>
       </el-table-column>
 
       <el-table-column label="机构类型" width="120">
         <template slot-scope="scope">{{
-          scope.row.extData.brhType | branchTypeFormat
-        }}</template>
+          scope.row.extData.brhType }}</template>
       </el-table-column>
 
       <el-table-column label="状态" width="80px">
@@ -101,7 +99,7 @@
           <div slot="reference" class="name-wrapper">
             <el-tag
               :type="scope.row.extData.brhSta == '1' ? 'success' : 'danger'"
-              >{{ scope.row.extData.brhSta | branchStatusFormat }}</el-tag
+              >{{ scope.row.extData.brhSta }}</el-tag
             >
           </div></template
         >
@@ -112,9 +110,9 @@
       </el-table-column>
 
       <el-table-column prop="extData.brhName" label="地址"> </el-table-column>
-    </el-table>
+    </el-table> -->
     <!-- 分页组件 -->
-    <div class="pagination">
+    <!-- <div class="pagination">
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handlePageCurrentChange"
@@ -125,7 +123,7 @@
         :total="page.total"
       >
       </el-pagination>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -172,10 +170,10 @@ export default {
     ...mapGetters(["currentRoleID"]),
   },
   mounted() {
-    console.log("call fetch brhinfo");
-    api.getBrhInfo().then((response) => {
-      console.log(response);
-    });
+    // console.log("call fetch brhinfo");
+    // api.getBrhInfo().then((response) => {
+    //   console.log(response);
+    // });
     // console.log(this.tableData);
   },
   watch: {
@@ -189,14 +187,14 @@ export default {
     //   },
     //   immediate: true,
     // },
-    currentRoleID: {
-      handler: function () {
-        this.forceUpdate();
-        console.log('roleID', this.currentRoleID)
-        console.log('permissionKey', this.permissionKey)
-      },
-      immediate: true,
-    },
+    // currentRoleID: {
+    //   handler: function () {
+    //     this.forceUpdate();
+    //     console.log('roleID', this.currentRoleID)
+    //     console.log('permissionKey', this.permissionKey)
+    //   },
+    //   immediate: true,
+    // },
   },
   methods: {
     forceUpdate(){
@@ -310,11 +308,11 @@ export default {
     },
     handlePageCurrentChange() {},
     fetchData() {
-      api
-        .getPersonInfo(this.query, this.page.current, this.page.size)
-        .then((response) => {
-          this.tableData = response.data.rows;
-        });
+      // api
+      //   .getPersonInfo(this.query, this.page.current, this.page.size)
+      //   .then((response) => {
+      //     this.tableData = response.data.rows;
+      //   });
     },
     //根据当前公司类型code,获取公司类型Name
     getBranchTypeName(key) {
