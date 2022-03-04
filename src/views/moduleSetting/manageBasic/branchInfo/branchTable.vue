@@ -52,65 +52,75 @@
         <el-button icon="el-icon-refresh" @click="reload">重置</el-button>
       </el-form-item>
     </el-form> -->
-
-    <!--显示主要数据table 选中行显示高亮highlight-current-row的样式为全局styles/common.scss中配置-->
-    <!-- <el-table
-      :data="tableData"
-      style="width: 100%; margin-bottom: 20px"
-      row-key="extData.brhId"
-      border
-      default-expand-all
-      :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
-      highlight-current-row
-      @row-click="onhandleRowClick"
-      @row-dblclick="onEditBranch"
-      :header-cell-style="{ 'text-align': 'center' }"
-      :cell-style="{ 'text-align': 'center' }"
-    >
-      <el-table-column label="序号" type="index" width="50" fixed>
-      </el-table-column>
-
-      <el-table-column
-        prop="extData.brhId"
-        label="机构编号"
-        sortable
-        width="150"
+    <!--显示主要数据table 选中行显示高亮highlight-current-row的样式为全局styles/common.scss中配置, 
+        注意引入main.js
+        table 属性加highlight-current-row-->
+    <div>
+      <el-table
+        :data="tableData"
+        style="width: 100%"
+        row-key="extData.brhId"
+        border
+        default-expand-all
+        :tree-props="{ children: 'children', hasChildren: 'hasChildren' }"
+        highlight-current-row
       >
-      </el-table-column>
-
-      <el-table-column prop="extData.brhName" label="机构名称" width="auto">
-      </el-table-column>
-
-      <el-table-column prop="extData.brhNickname" label="机构简称" width="120">
-      </el-table-column>
-
-      <el-table-column prop="extData.upBrhId" label="上级机构名称 " width="auto"
-        ><template slot-scope="scope">{{
-          scope.row.extData.upBrhId }}</template>
-      </el-table-column>
-
-      <el-table-column label="机构类型" width="120">
-        <template slot-scope="scope">{{
-          scope.row.extData.brhType }}</template>
-      </el-table-column>
-
-      <el-table-column label="状态" width="80px">
-        <template slot-scope="scope">
-          <div slot="reference" class="name-wrapper">
-            <el-tag
-              :type="scope.row.extData.brhSta == '1' ? 'success' : 'danger'"
-              >{{ scope.row.extData.brhSta }}</el-tag
-            >
-          </div></template
+        <el-table-column label="序号" type="index" width="50" fixed>
+        </el-table-column>
+        <el-table-column
+          prop="extData.brhId"
+          label="机构编号"
+          sortable
+          width="150"
         >
-      </el-table-column>
-      <el-table-column prop="extData.contName" label="联系人" width="120px">
-      </el-table-column>
-      <el-table-column prop="extData.contPhone" label="联系人电话" width="150">
-      </el-table-column>
+        </el-table-column>
 
-      <el-table-column prop="extData.brhName" label="地址"> </el-table-column>
-    </el-table> -->
+        <el-table-column prop="extData.brhName" label="机构名称" width="auto">
+        </el-table-column>
+
+        <el-table-column
+          prop="extData.brhNickname"
+          label="机构简称"
+          width="120"
+        >
+        </el-table-column>
+
+        <el-table-column
+          prop="extData.upBrhId"
+          label="上级机构名称 "
+          width="auto"
+          ><template #default="{row}">
+            {{ row.extData.upBrhId }}
+          </template>
+        </el-table-column>
+
+        <el-table-column label="机构类型" width="120">
+          <template #default="{row}">{{ row.extData.brhType }}</template>
+        </el-table-column>
+
+        <el-table-column label="状态" width="80px">
+          <template #default="{row}">
+            <div slot="reference" class="name-wrapper">
+              <el-tag
+                :type="row.extData.brhSta == '1' ? 'success' : 'danger'"
+                >{{ row.extData.brhSta }}</el-tag
+              >
+            </div></template
+          >
+        </el-table-column>
+        <el-table-column prop="extData.contName" label="联系人" width="120px">
+        </el-table-column>
+        <el-table-column
+          prop="extData.contPhone"
+          label="联系人电话"
+          width="150"
+        >
+        </el-table-column>
+
+        <el-table-column prop="extData.brhName" label="地址"> </el-table-column>
+      </el-table>
+    </div>
+
     <!-- 分页组件 -->
     <!-- <div class="pagination">
       <el-pagination
@@ -128,23 +138,59 @@
 </template>
 
 <script>
-import api from "@/api/personInfoMock";
+import api from '@/api/personInfoMock'
 import { mapGetters } from 'vuex'
 // import Edit from "./edit";
-import branchData from "./branchInfo.json";
+import branchData from './branchInfo.json'
+
+const tableData1 = [
+  {
+    id: 1,
+    date: '2016-05-02',
+    name: 'wangxiaohu'
+  },
+  {
+    id: 2,
+    date: '2016-05-04',
+    name: 'wangxiaohu'
+  },
+  {
+    id: 3,
+    date: '2016-05-01',
+    name: 'wangxiaohu',
+    children: [
+      {
+        id: 31,
+        date: '2016-05-01',
+        name: 'wangxiaohu'
+      },
+      {
+        id: 32,
+        date: '2016-05-01',
+        name: 'wangxiaohu'
+      }
+    ]
+  },
+  {
+    id: 4,
+    date: '2016-05-03',
+    name: 'wangxiaohu'
+  }
+]
 const brhTypes = [
-  { code: "00", brhType: "集团本级" },
-  { code: "01", brhType: "一级子公司" },
-  { code: "02", brhType: "二级子公司" },
-  { code: "03", brhType: "三级子公司" },
-];
+  { code: '00', brhType: '集团本级' },
+  { code: '01', brhType: '一级子公司' },
+  { code: '02', brhType: '二级子公司' },
+  { code: '03', brhType: '三级子公司' }
+]
 export default {
-  name: "roleTable",
+  name: 'roleTable',
   components: {
     // edit: Edit, // Edit: Edit
   },
   data() {
     return {
+      tableData1: tableData1,
       tableData: branchData.arrayList,
       // multipleSelection: [],
       brhTypes,
@@ -155,19 +201,19 @@ export default {
         // 分页对象
         current: 1, // 当前页码
         size: 20, // 每页显示多少条
-        total: 50, // 总记录数
+        total: 50 // 总记录数
       },
-      permissionKey:0
+      permissionKey: 0
       // edit: {
       //   title: "",
       //   visible: false,
       //   formData: {},
       // },
-    };
+    }
   },
   filters: {},
   computed: {
-    ...mapGetters(["currentRoleID"]),
+    ...mapGetters(['currentRoleID'])
   },
   mounted() {
     // console.log("call fetch brhinfo");
@@ -197,114 +243,114 @@ export default {
     // },
   },
   methods: {
-    forceUpdate(){
+    forceUpdate() {
       // 用更新组件key的方式强制重新渲染
-      this.permissionKey = (this.permissionKey + 1)%10
+      this.permissionKey = (this.permissionKey + 1) % 10
     },
     onAddBranch() {
       if (!this.getSelectedBranch) {
-        this.$alert("请选择一个上级机构", "提示", {
-          confirmButtonText: "确定",
-          type: "warning",
+        this.$alert('请选择一个上级机构', '提示', {
+          confirmButtonText: '确定',
+          type: 'warning'
         })
           .then(() => {})
-          .catch(() => {});
+          .catch(() => {})
 
-        return;
+        return
       }
       // 跳转到新增页面, 携带title参数
       this.$router.push({
-        path: "/setting-module/basic/branch-info-edit-add",
+        path: '/setting-module/basic/branch-info-edit-add',
         query: {
-          title: "新增机构",
-          branch: this.getSubBranch,
-        },
-      });
+          title: '新增机构',
+          branch: this.getSubBranch
+        }
+      })
     },
     onEditBranch() {
       if (!this.getSelectedBranch) {
-        this.$alert("请先选择一个机构", "提示", {
-          confirmButtonText: "确定",
-          type: "warning",
+        this.$alert('请先选择一个机构', '提示', {
+          confirmButtonText: '确定',
+          type: 'warning'
         })
           .then(() => {})
-          .catch(() => {});
-        return;
+          .catch(() => {})
+        return
       }
       // 跳转到新增页面, 携带title参数
       this.$router.push({
-        path: "/setting-module/basic/branch-info-edit-add",
+        path: '/setting-module/basic/branch-info-edit-add',
         query: {
-          title: "修改机构",
-          branch: this.getSelectedBranch,
-        },
-      });
+          title: '修改机构',
+          branch: this.getSelectedBranch
+        }
+      })
     },
     onActivateBranch() {
       if (!this.getSelectedBranch) {
-        this.$alert("请先选择一个机构", "提示", {
-          confirmButtonText: "确定",
-          type: "warning",
+        this.$alert('请先选择一个机构', '提示', {
+          confirmButtonText: '确定',
+          type: 'warning'
         })
           .then(() => {})
-          .catch(() => {});
-        return;
+          .catch(() => {})
+        return
       }
-      if (this.getSelectedBranch.brhSta == "1") {
-        this.$alert("该机构已启用. 不能重复启用", "提示", {
-          confirmButtonText: "确定",
-          type: "warning",
+      if (this.getSelectedBranch.brhSta == '1') {
+        this.$alert('该机构已启用. 不能重复启用', '提示', {
+          confirmButtonText: '确定',
+          type: 'warning'
         })
           .then(() => {})
-          .catch(() => {});
-        return;
+          .catch(() => {})
+        return
       }
-      this.getSelectedBranch.brhSta = "1";
+      this.getSelectedBranch.brhSta = '1'
       this.$message({
-        message: "成功启用该机构",
-        type: "success",
-      });
+        message: '成功启用该机构',
+        type: 'success'
+      })
     },
     onDeactivateBranch() {
       if (!this.getSelectedBranch) {
-        this.$alert("请先选择一个机构", "提示", {
-          confirmButtonText: "确定",
-          type: "warning",
+        this.$alert('请先选择一个机构', '提示', {
+          confirmButtonText: '确定',
+          type: 'warning'
         })
           .then(() => {})
-          .catch(() => {});
-        return;
+          .catch(() => {})
+        return
       }
-      if (this.getSelectedBranch.brhSta == "0") {
-        this.$alert("该机构已停用. 不能重复停用", "提示", {
-          confirmButtonText: "确定",
-          type: "warning",
+      if (this.getSelectedBranch.brhSta == '0') {
+        this.$alert('该机构已停用. 不能重复停用', '提示', {
+          confirmButtonText: '确定',
+          type: 'warning'
         })
           .then(() => {})
-          .catch(() => {});
-        return;
+          .catch(() => {})
+        return
       }
-      this.getSelectedBranch.brhSta = "0";
+      this.getSelectedBranch.brhSta = '0'
       this.$message({
-        message: "成功停用该机构",
-        type: "success",
-      });
+        message: '成功停用该机构',
+        type: 'success'
+      })
     },
     // val 是切换之后的每页显示多少条
     handleSizeChange(val) {
-      this.page.size = val;
-      this.fetchData();
+      this.page.size = val
+      this.fetchData()
     },
     // 选中table行后触发
     onhandleRowClick(row, column, event) {
       //获取当前branch,
-      this.getSelectedBranch = row.extData;
+      this.getSelectedBranch = row.extData
       //增加一项brhTypeName
       this.getSelectedBranch.brhTypeName = this.getBranchTypeName(
         this.getSelectedBranch.brhType
-      );
+      )
       //获取下级branch
-      this.getSubBranch = this.getSubBranchType(this.getSelectedBranch.brhType);
+      this.getSubBranch = this.getSubBranchType(this.getSelectedBranch.brhType)
     },
     handlePageCurrentChange() {},
     fetchData() {
@@ -318,9 +364,9 @@ export default {
     getBranchTypeName(key) {
       for (let index = 0; index < this.brhTypes.length; index++) {
         if (index == this.brhTypes.length - 1) {
-          return null;
+          return null
         } else if (this.brhTypes[index].code == key) {
-          return this.brhTypes[index].brhType;
+          return this.brhTypes[index].brhType
         }
       }
     },
@@ -328,9 +374,9 @@ export default {
     getSubBranchType(key) {
       for (let index = 0; index < this.brhTypes.length; index++) {
         if (index == this.brhTypes.length - 1) {
-          return null;
+          return null
         } else if (this.brhTypes[index].code == key) {
-          return this.brhTypes[index + 1];
+          return this.brhTypes[index + 1]
         }
       }
     },
@@ -347,10 +393,10 @@ export default {
       // this.fetchData();
     },
     handleDelete(id) {
-      this.$confirm("确认删除这条记录吗?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
+      this.$confirm('确认删除这条记录吗?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
         .then(() => {
           // 发送删除请求
@@ -361,20 +407,20 @@ export default {
           //         message: response.message
           //     })
           this.$message({
-            type: "success",
-            message: id + "已删除",
-          });
+            type: 'success',
+            message: id + '已删除'
+          })
           // })
-          console.log(id, "已删除");
+          console.log(id, '已删除')
           // 刷新列表数据
-          this.fetchData();
+          this.fetchData()
         })
         .catch(() => {
           // 取消删除，不用理会
-        });
-    },
-  },
-};
+        })
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
