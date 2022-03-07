@@ -1,18 +1,18 @@
 import Cookies from 'js-cookie'
 
 
-const TokenKey = 'vue_admin_template_token'
+const loginStatus = 'flag for is or not logged'
 const Operator = "operator"
 const RoleID = 'roleId'
 export function getToken() {
-  return Cookies.get(TokenKey)
+  return Cookies.get(loginStatus)
 }
-export function setToken(token) {
-  return Cookies.set(TokenKey, token)
+export function setToken(status) {
+  return Cookies.set(loginStatus, status)
 }
 
 export function removeToken() {
-  return Cookies.remove(TokenKey)
+  return Cookies.remove(loginStatus)
 }
 
 export function removeOperator() {

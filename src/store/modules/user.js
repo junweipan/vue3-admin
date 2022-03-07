@@ -1,5 +1,15 @@
 import { login, logout, getInfo } from '@/api/user'
-import { getToken, setToken, removeToken,getOperator,removeOperator,setOperator, getRoleID,removeRoleID,setRoleID } from '@/utils/auth'
+import {
+  getToken,
+  setToken,
+  removeToken,
+  getOperator,
+  removeOperator,
+  setOperator,
+  getRoleID,
+  removeRoleID,
+  setRoleID
+} from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
 //后端返回data:
@@ -8,24 +18,20 @@ import router, { resetRouter } from '@/router'
 // roleName: 当前的role
 // roleType: 当前role的type, 本级02或汇总01
 // brhName: 操作员所属机构
-const fakeToken = "vue_admin_template_token"
+const loginStatus = 'flag for is or not logged'
 
 const state = {
   token: getToken(),
   name: '',
   avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-  introduction: '',
   roles: ['admin'],
-  operator:{},
-  currentRoleID:null,
+  operator: {},
+  currentRoleID: ''
 }
 
 const mutations = {
   SET_TOKEN: (state, token) => {
     state.token = token
-  },
-  SET_INTRODUCTION: (state, introduction) => {
-    state.introduction = introduction
   },
   SET_NAME: (state, name) => {
     state.name = name
@@ -41,11 +47,11 @@ const mutations = {
   },
   SET_CURRENT_ROLE_ID: (state, roleId) => {
     state.currentRoleID = roleId
-  },
+  }
 }
 
 const actions = {
-  changeRole({ commit }, roleId){
+  changeRole({ commit }, roleId) {
     //刷新cookie和store中的current role ID
     commit('SET_CURRENT_ROLE_ID', roleId)
     setRoleID(roleId)
@@ -53,80 +59,117 @@ const actions = {
   // user login
   login({ commit }, userCredential) {
     return new Promise((resolve, reject) => {
-      login(userCredential).then(response => {
-        //套了多层data, 后续需要优化
-        const {data}  = response.data
-        const operator = data
-        //operator中的成员
-        const { oprId, roleId, oprName, roleInfoList, roleName, roleType, brhName } = operator
-        //存入operator -> store
-        commit('SET_OPERATOR', operator)
-        commit('SET_CURRENT_ROLE_ID', operator.roleId)
-        console.log('SET_CURRENT_ROLE_ID',operator.roleId);
-        // 存入cookie
-        setToken(fakeToken)
-        setOperator(operator)
-        // setRoleID(roleId)
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
+      login(userCredential)
+        .then(response => {
+          //套了多层data, 后续需要优化
+          const { data } = response.data
+          const operator = data
+          //operator中的成员
+          const {
+            oprId,
+            roleId,
+            oprName,
+            roleInfoList,
+            roleName,
+            roleType,
+            brhName
+          } = operator
+          //存入store
+          commit('SET_TOKEN', loginStatus)
+          commit('SET_OPERATOR', operator)
+          commit('SET_CURRENT_ROLE_ID', operator.roleId)
+
+          // 存入cookie
+          setToken(loginStatus)
+          setOperator(operator)
+          setRoleID(roleId)
+          resolve()
+        })
+        .catch(error => {
+          reject(error)
+        })
     })
   },
-  setOperator({ commit, state }){
-    commit('SET_OPERATOR', JSON.parse(getOperator()))
-  },
+
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getInfo(state.operator.oprId).then(response => {
-        // json data层级有点混乱, 需要优化
-        const { data } = response.data
-        const operator = data
-        if (response.data.code !== 200) {
-          return reject('Verification failed, please Login again.')
-        }
-        const { oprId, roleId, oprName, roleInfoList, roleName, roleType, brhName } = operator
-        // 把operator信息存入store
-        commit('SET_OPERATOR', operator)
-        commit('SET_CURRENT_ROLE_ID', roleId)
-        
-        setRoleID(roleId)
-        resolve(state.operator.roleInfoList)
-      }).catch(error => {
-        reject(error)
-      })
+      getInfo(state.operator.oprId)
+        .then(response => {
+          // json data层级有点混乱, 需要优化
+          const { data } = response.data
+          const operator = data
+          if (response.data.code !== 200) {
+            return reject('Verification failed, please Login again.')
+          }
+          const {
+            oprId,
+            roleId,
+            oprName,
+            roleInfoList,
+            roleName,
+            roleType,
+            brhName
+          } = operator
+
+          // 刷新 store
+          commit('SET_TOKEN', loginStatus)
+          commit('SET_OPERATOR', operator)
+          commit('SET_CURRENT_ROLE_ID', operator.roleId)
+
+          // 刷新 cookie
+          setToken(loginStatus)
+          setOperator(operator)
+          setRoleID(roleId)
+
+          resolve(state.operator.roleInfoList)
+        })
+        .catch(error => {
+          reject(error)
+        })
     })
   },
 
   // user logout
   logout({ commit, state, dispatch }) {
     return new Promise((resolve, reject) => {
-      logout().then(() => {
-        removeToken()
-        removeOperator()
-        removeRoleID()
-        // resetRouter()
-        // reset visited views and cached views
-        // to fixed https://github.com/PanJiaChen/vue-element-admin/issues/2485
-        dispatch('tagsView/delAllViews', null, { root: true })
-        resolve()
-      }).catch(error => {
-        reject(error)
-      })
+      logout()
+        .then(() => {
+          //清空store
+          commit('SET_TOKEN', '')
+          commit('SET_CURRENT_ROLE_ID', '')
+          commit('SET_OPERATOR', {})
+
+          // 清空cookie
+          removeToken()
+          removeOperator()
+          removeRoleID()
+
+          //清空标签路由
+          dispatch('tagsView/delAllViews', null, { root: true })
+          resolve()
+        })
+        .catch(error => {
+          reject(error)
+        })
     })
   },
 
-  // remove token
-  resetToken({ commit }) {
+  // remove login status, currentRoleId, operator
+  resetStatus({ commit }) {
     return new Promise(resolve => {
+      //清空store
       commit('SET_TOKEN', '')
-      commit('SET_ROLES', [])
+      commit('SET_CURRENT_ROLE_ID', '')
+      commit('SET_OPERATOR', {})
+
+      // 清空cookie
       removeToken()
+      removeOperator()
+      removeRoleID()
       resolve()
     })
-  },
-
+  }
 }
 
 export default {
