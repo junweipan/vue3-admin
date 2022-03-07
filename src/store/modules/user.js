@@ -94,12 +94,24 @@ const actions = {
   // get user info
   getInfo({ commit, state }) {
     return new Promise((resolve, reject) => {
-      getInfo(state.operator.oprId)
+      //用cookie中的operator信息去call后端
+      getInfo(JSON.parse(getOperator()).oprId)
         .then(response => {
           // json data层级有点混乱, 需要优化
           const { data } = response.data
           const operator = data
           if (response.data.code !== 200) {
+            // 如果seesion过期, 清空store&cookie
+
+            //清空store
+            // commit('SET_TOKEN', '')
+            // commit('SET_CURRENT_ROLE_ID', '')
+            // commit('SET_OPERATOR', {})
+
+            // // 清空cookie
+            // removeToken()
+            // removeOperator()
+            // removeRoleID()
             return reject('Verification failed, please Login again.')
           }
           const {
@@ -122,7 +134,7 @@ const actions = {
           setOperator(operator)
           setRoleID(roleId)
 
-          resolve(state.operator.roleInfoList)
+          resolve(state.operator)
         })
         .catch(error => {
           reject(error)

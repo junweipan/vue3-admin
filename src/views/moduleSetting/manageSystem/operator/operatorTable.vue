@@ -395,9 +395,6 @@ export default {
   display: flex;
   flex-direction: column;
 }
-// ::v-deep .el-input {
-//   width: 100%;
-// }
 .pagination {
   align-self: flex-end;
   margin-top: 20px;

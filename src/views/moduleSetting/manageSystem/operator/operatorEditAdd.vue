@@ -225,10 +225,10 @@ export default {
     margin-bottom: 0;
   }
 }
-::v-deep .el-transfer-panel__body {
+:deep(.el-transfer-panel__body) {
   height: 300px;
 }
-::v-deep .el-transfer-panel__list.is-filterable {
+:deep(.el-transfer-panel__list.is-filterable) {
   height: 250px;
 }
 .el-col {

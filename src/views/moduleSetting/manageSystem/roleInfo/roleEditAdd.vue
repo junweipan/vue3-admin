@@ -150,7 +150,7 @@ export default {
   padding: 10px 0;
   background-color: #f9fafc;
 }
-#scrollbar ::v-deep .el-scrollbar__wrap {
+#scrollbar :deep(.el-scrollbar__wrap) {
   overflow-x: hidden;
 }
 </style>
