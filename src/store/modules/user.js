@@ -104,14 +104,14 @@ const actions = {
             // 如果seesion过期, 清空store&cookie
 
             //清空store
-            // commit('SET_TOKEN', '')
-            // commit('SET_CURRENT_ROLE_ID', '')
-            // commit('SET_OPERATOR', {})
+            commit('SET_TOKEN', '')
+            commit('SET_CURRENT_ROLE_ID', '')
+            commit('SET_OPERATOR', {})
 
-            // // 清空cookie
-            // removeToken()
-            // removeOperator()
-            // removeRoleID()
+            // 清空cookie
+            removeToken()
+            removeOperator()
+            removeRoleID()
             return reject('Verification failed, please Login again.')
           }
           const {

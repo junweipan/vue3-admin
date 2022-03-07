@@ -23,7 +23,8 @@ router.beforeEach(async (to, from, next) => {
   const hasOperator = getOperator()
   // 如果cookie中token存在hasToken,hasRoleID,hasOperator 才能放行, 以防显示信息不全bug
   if (hasToken && hasRoleID && hasOperator) {
-    
+    // 根据cookie中数据把currentRoleID, operator, roleId 刷新后放入store
+    await store.dispatch('user/getInfo')
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
       next({ path: '/' })
@@ -35,43 +36,12 @@ router.beforeEach(async (to, from, next) => {
       const hasRoles = store.getters.currentRoleID !== null
       
       if (hasRoles) {
-        // 初始化router, accessRoutes为asyncRoutes,
-        const accessRoutes = await store.dispatch(
-          'permission/generateAsyncRoutes'
-        )
-        
-        // dynamically add accessible routes
-        for (const item of accessRoutes) {
-          router.addRoute(item)
-        }
+        // session未过期
+        console.log('router',router)
         next()
-      } else { //如果currentRoleID不存在
-        try {
-          // get user info
-          // 功能: call 后端, 把currentRoleID, operator, roleId 刷新后放入store 和 cookie
-          await store.dispatch('user/getInfo')
-
-          // 初始化router, accessRoutes为asyncRoutes,
-          const accessRoutes = await store.dispatch(
-            'permission/generateAsyncRoutes'
-          )
-          
-          // dynamically add accessible routes
-          for (const item of accessRoutes) {
-            router.addRoute(item)
-          }
-          // hack method to ensure that addRoutes is complete
-          // set the replace: true, so the navigation will not leave a history record
-          next({ ...to, replace: true })
-        } catch (error) {// 如果cookie过期,则清楚cookie,并返回login页面
-         
-          await store.dispatch('user/resetStatus')
-          ElMessage.error(error || 'Has Error')
-          // next(`/login?redirect=${to.path}`)
-          //刷新页面后一律回到主页面
-          next(`/login?redirect=/`)
-          NProgress.done()
-        }
+      } else { 
+        //如果currentRoleID不存在, 则session已过期
+        next(`/login?redirect=/`)
       }
     }
   } else {

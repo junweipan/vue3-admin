@@ -1,6 +1,7 @@
 import {
   createRouter,
-  createWebHistory
+  createWebHistory,
+  createWebHashHistory
 } from 'vue-router'
 
 import analysisRoutes from './modules/analysisRoutes'
@@ -109,10 +110,10 @@ export const asyncRoutes = [
 const createCustomRouter = () =>
   createRouter({
     // mode: 'history', // require service support
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     scrollBehavior: () => ({ y: 0 }),
     // routes: constantRoutes
-    routes: constantRoutes
+    routes: constantRoutes.concat(asyncRoutes)
   })
 
 const router = createCustomRouter()
